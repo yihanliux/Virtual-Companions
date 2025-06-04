@@ -1,0 +1,121 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: #f9fafb;
+  font-family: 'Segoe UI', sans-serif;
+  min-height: 100vh;
+}
+
+main {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.page-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  padding: 3rem;
+  width: 100%;
+  max-width: 640px;
+}
+
+h1 {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: #111827;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.desc {
+  color: #6b7280;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.upload-box {
+  border: 2px dashed #d1d5db;
+  padding: 3rem;
+  border-radius: 12px;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+button#submitBtn {
+  padding: 0.75rem 1.5rem;
+  background-color: #1a237e;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+button#submitBtn:hover {
+  background-color: #151b63;
+}
+
+.hint {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 0.5rem;
+}
+
+.formats {
+  font-size: 0.875rem;
+  color: #6b7280;
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.preview {
+  margin-top: 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.preview h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: #111827;
+}
+
+#outputImage {
+  max-width: 100%;
+  border-radius: 12px;
+  border: 1px solid #d1d5db;
+}
+
+.hidden {
+  display: none;
+}
+
+/* 留言板样式 */
+.message-board {
+  text-align: center;
+}
+
+.message-board h2 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.message-board p {
+  font-size: 1rem;
+  margin: 0.5rem 0;
+  color: #374151;
+}

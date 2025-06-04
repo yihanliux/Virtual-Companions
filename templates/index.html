@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Virtual Companions</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <main>
+    <!-- 📦 主功能区卡片 -->
+    <div class="page-center">
+      <div class="card">
+
+        <div id="uploadSection">
+          <h1>上传照片进行骨架识别</h1>
+          <p class="desc">请选择一张包含完整人体的图片</p>
+
+          <div class="upload-box">
+            <button id="submitBtn">上传照片</button>
+            <p class="hint">请选择图片文件后点击上传</p>
+            <input type="file" accept="image/*" id="photo-upload" class="hidden">
+          </div>
+
+          <div class="formats">支持格式：JPG, PNG（最大 10MB）</div>
+        </div>
+
+        <!-- 识别结果 -->
+        <div id="preview" class="preview hidden">
+          <h1>识别结果：</h1>
+          <img id="outputImage" src="" alt="识别后图像" />
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 🗨️ 留言板 -->
+    <div class="page-center">
+      <div class="card">
+        <section class="message-board">
+          <h2>留言板 📝</h2>
+          <p>E.g. 我学会了！ —— yihan</p>
+          <!-- 请在此处添加留言 <p>我学会了！ —— XXX</p> -->
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
