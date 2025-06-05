@@ -33,13 +33,13 @@ h1 {
   font-weight: bold;
   color: #111827;
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
 .desc {
   color: #6b7280;
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 }
 
 .upload-box {
@@ -47,7 +47,7 @@ h1 {
   padding: 3rem;
   border-radius: 12px;
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
 button#submitBtn {
@@ -67,14 +67,14 @@ button#submitBtn:hover {
 .hint {
   font-size: 0.875rem;
   color: #6b7280;
-  margin-top: 0.5rem;
+  margin-top: 1rem;
 }
 
 .formats {
   font-size: 0.875rem;
   color: #6b7280;
   text-align: center;
-  margin-top: 1.5rem;
+  margin-top: 2rem;
 }
 
 .preview {
@@ -89,7 +89,7 @@ button#submitBtn:hover {
 .preview h1 {
   font-size: 1.5rem;
   font-weight: bold;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
   color: #111827;
 }
 
@@ -97,6 +97,7 @@ button#submitBtn:hover {
   max-width: 100%;
   border-radius: 12px;
   border: 1px solid #d1d5db;
+  margin-bottom: 5rem;
 }
 
 .hidden {
