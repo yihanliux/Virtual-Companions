@@ -156,7 +156,7 @@ def bar_plot(avg_dict):
 # 主函数：完整流程
 def main():
     standard_path = "pose_data_7s.json"
-    subject_path = "pose_data_zyx.json"
+    subject_path = "pose_data_zjx.json"
     std_raw = read_pose_data.load_and_organize_pose_data(standard_path)
     sub_raw = read_pose_data.load_and_organize_pose_data(subject_path)
 
@@ -168,8 +168,9 @@ def main():
     std = apply_centering(apply_scale(std_raw, compute_scale_factors(std_raw)))
     sub = apply_centering(apply_scale(sub_raw, compute_scale_factors(sub_raw)))
 
+    # 构造骨架段，排除面部和手指点（0-10，17-22）
     segment_list = []
-    excluded = set(range(0, 11))
+    excluded = set(range(0, 11)) | set(range(17, 23))
     total_points = 33
     for i in range(total_points):
         for j in range(i+1, total_points):
