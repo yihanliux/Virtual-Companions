@@ -110,6 +110,28 @@ def extract_angle_sequence(data, joint_from=11, joint_to=23):
         angles.append(angle)
     return angles
 
+# 关键帧提取（动作变化 + 模仿误差变化）
+def extract_keyframes_dual_criteria(std_data, sub_data, joint_from=11, joint_to=23):
+    from math import sqrt
+    std_change = extract_angle_sequence(std_data, joint_from, joint_to)
+    imitation_error_series = compare_segments(std_data, sub_data, [("ref", joint_from, joint_to)])['ref']['series'][1:]
+    def auto_threshold_extract(series):
+        diffs = []
+        for i in range(1, len(series)):
+            if series[i] is None or series[i - 1] is None:
+                diffs.append(0)
+            else:
+                diffs.append(abs(series[i] - series[i - 1]))
+        if not diffs:
+            return [0]
+        mean_diff = sum(diffs) / len(diffs)
+        std_diff = sqrt(sum((d - mean_diff) ** 2 for d in diffs) / len(diffs))
+        return [i + 1 for i, d in enumerate(diffs) if d > (mean_diff + std_diff)]
+    keys_std = auto_threshold_extract(std_change)
+    keys_err = auto_threshold_extract(imitation_error_series)
+    return sorted(set(keys_std + keys_err))
+
+
 # 分段对比
 def compare_segments(std_data, sub_data, segment_list, keyframes=None):
     results = {}
@@ -219,16 +241,16 @@ def extract_keyframes_combined_with_pauses(std_data, sub_data, ref_json_path):
     pause_all = pause_foot & pause_hip & pause_knee & pause_shldr
 
 
-    return sorted(keys_dual & pause_all)
+    return sorted(keys_dual | pause_all)
 
 # 主函数：完整流程
 def main():
-    standard_path = "pose_data_7s.json"
-    subject_path = "pose_data_zyx.json"
+    standard_path = "pose_data_standard.json"
+    subject_path = "pose_data_1min_zyx.json"
     std_raw = read_pose_data.load_and_organize_pose_data(standard_path)
     sub_raw = read_pose_data.load_and_organize_pose_data(subject_path)
 
-    TARGET_FRAMES = 211
+    TARGET_FRAMES = 1801
     std_raw = align_frame_count(std_raw, TARGET_FRAMES)
     sub_raw = align_frame_count(sub_raw, TARGET_FRAMES)
 
