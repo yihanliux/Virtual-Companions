@@ -178,7 +178,7 @@ def calculate_coordinate(landmarks, idx):
     return (lm['x'], lm['y'], lm['z'])
 
 # Detect pause points with general body landmarks
-def detect_pause_points_general(landmarks_data, idx, threshold=0.01, min_pause_duration=5):
+def detect_pause_points_general(landmarks_data, idx, threshold=0.02, min_pause_duration=3):
     pause_points = []
     pause_duration = 0
     previous = None
@@ -220,7 +220,7 @@ def extract_keyframes_combined_with_pauses(std_data, sub_data, ref_json_path):
             return [0]
         mean_diff = sum(diffs) / len(diffs)
         std_diff = sqrt(sum((d - mean_diff) ** 2 for d in diffs) / len(diffs))
-        return [i + 1 for i, d in enumerate(diffs) if d > (mean_diff + std_diff)]
+        return [i + 1 for i, d in enumerate(diffs) if d > (mean_diff + 0.5 * std_diff)]
 
     std_change = extract_angle_sequence(std_data)
     imitation_error_series = compare_segments(std_data, sub_data, [("ref", 11, 23)])['ref']['series'][1:]
@@ -232,21 +232,21 @@ def extract_keyframes_combined_with_pauses(std_data, sub_data, ref_json_path):
     with open(ref_json_path, 'r', encoding='utf-8') as f:
         ref_data = json.load(f)
 
-    pause_foot = set(detect_pause_points_general(ref_data, 32))
+    pause_foot = set(detect_pause_points_general(ref_data, 28))
     pause_hip = set(detect_pause_points_general(ref_data, 23))
     pause_knee = set(detect_pause_points_general(ref_data, 27))
     pause_shldr = set(detect_pause_points_general(ref_data, 11))
 
 
-    pause_all = pause_foot & pause_hip & pause_knee & pause_shldr
+    pause_all = pause_foot | pause_hip | pause_knee | pause_shldr
 
 
-    return sorted(keys_dual | pause_all)
+    return sorted(keys_dual & pause_all)
 
 # 主函数：完整流程
 def main():
     standard_path = "pose_data_standard.json"
-    subject_path = "pose_data_1min_zyx.json"
+    subject_path = "pose_data_1min_yzy.json"
     std_raw = read_pose_data.load_and_organize_pose_data(standard_path)
     sub_raw = read_pose_data.load_and_organize_pose_data(subject_path)
 
@@ -289,6 +289,8 @@ def main():
         print("\n总体平均角度差 (关键帧): N/A")
 
     bar_plot({k: v['avg'] for k, v in results.items()})
+    print("关键帧索引：", keyframes)
+    print("关键帧数量：", len(keyframes))
 
 if __name__ == "__main__":
     main()
